@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — AI 서비스 기획 · 데이터 운영</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface2: #f2f1ee;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --accent: #2d5be3;
+    --accent-light: #e8eeff;
+    --accent2: #e84855;
+    --border: #e4e4e0;
+    --yellow: #f5c842;
+    --green: #2eb872;
+    --purple: #9b59b6;
+    --radius: 12px;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 15px; line-height: 1.75; }
+
+  header { background: var(--text); color: white; padding: 52px 48px 44px; }
+  .header-inner { max-width: 860px; margin: 0 auto; }
+  .header-label { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 10px; }
+  header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  header h2 { font-size: 14px; font-weight: 300; color: #aaa; margin-bottom: 24px; }
+  .header-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .header-links a { font-family: var(--mono); font-size: 12px; color: #bbb; text-decoration: none; border-bottom: 1px solid #444; padding-bottom: 2px; transition: color .2s, border-color .2s; }
+  .header-links a:hover { color: white; border-color: white; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 44px 24px 80px; }
+
+  .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 48px; }
+  .about-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-size: 13.5px; line-height: 1.65; }
+  .about-item .icon { font-size: 16px; margin-bottom: 6px; display: block; }
+  .about-item.full { grid-column: 1 / -1; background: var(--accent-light); border-color: #c0ccf5; }
+
+  /* PROJECT CARD */
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 32px; overflow: hidden; }
+  .card-header { padding: 22px 26px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 14px; }
+  .card-num { font-family: var(--mono); font-size: 11px; color: var(--text-muted); background: var(--surface2); border-radius: 6px; padding: 4px 10px; flex-shrink: 0; margin-top: 3px; }
+  .card-title-group h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .card-period { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+  .card-body { padding: 22px 26px; }
+
+  .role-summary { background: var(--surface2); border-radius: 8px; padding: 13px 16px; font-size: 13.5px; color: #333; margin-bottom: 18px; line-height: 1.7; }
+  .bg-block { border-left: 3px solid var(--border); padding: 10px 14px; margin-bottom: 20px; font-size: 13.5px; color: var(--text-muted); }
+  .bg-block strong { color: var(--text); }
+
+  /* STAT */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+  .stat-card { background: var(--surface2); border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-num { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); display: block; margin-bottom: 3px; }
+  .stat-label { font-size: 11px; color: var(--text-muted); }
+
+  /* TASK */
+  .task-list { display: flex; flex-direction: column; gap: 16px; }
+  .task-item { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .task-header { padding: 12px 16px; background: var(--surface2); display: flex; align-items: center; gap: 10px; }
+  .task-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: white; font-family: var(--mono); font-size: 10px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .task-num.red { background: var(--accent2); }
+  .task-num.green { background: var(--green); }
+  .task-num.yellow { background: #d4a800; }
+  .task-num.purple { background: var(--purple); }
+  .task-title { font-size: 13.5px; font-weight: 700; }
+  .task-body { padding: 14px 16px; font-size: 13px; }
+  .task-body ul { padding-left: 16px; }
+  .task-body li { margin-bottom: 5px; color: #333; }
+  .task-body li strong { color: var(--text); }
+
+  /* FLOW */
+  .flow-box { background: var(--surface2); border-radius: 8px; padding: 12px 16px; margin: 10px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px; }
+  .flow-step { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; }
+  .flow-arrow { color: var(--accent); font-weight: 700; }
+
+  /* RESULT TAG */
+  .result-tag { display: inline-flex; align-items: center; gap: 6px; background: #e6f4eb; color: #1a7a40; border-radius: 100px; padding: 5px 14px; font-size: 12px; font-weight: 500; margin-top: 10px; }
+  .result-tag::before { content: '→'; font-weight: 700; }
+
+  /* BEFORE/AFTER */
+  .ba-grid { display: grid; grid-template-columns: 1fr 32px 1fr; gap: 0; margin: 10px 0; align-items: center; }
+  .ba-box { background: var(--surface2); border-radius: 8px; padding: 11px 13px; }
+  .ba-box.after { background: var(--accent-light); }
+  .ba-label { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  .ba-label.after-label { color: var(--accent); }
+  .ba-code { font-family: var(--mono); font-size: 11.5px; color: #333; line-height: 1.8; }
+  .ba-arrow { text-align: center; font-size: 16px; color: var(--accent); font-weight: 700; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 10px 0; }
+  .data-table th { background: var(--surface2); padding: 8px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); font-size: 11.5px; }
+  .data-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* DOMAIN GRID */
+  .domain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+  .domain-item { background: var(--surface2); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; }
+  .domain-name { font-weight: 700; font-size: 12px; margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+  .domain-tag { font-family: var(--mono); font-size: 9.5px; background: var(--accent-light); color: var(--accent); padding: 1px 6px; border-radius: 4px; }
+  .domain-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
+
+  /* RESULT COMPARE */
+  .result-compare { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 12px 0; }
+  .result-compare table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .result-compare th { padding: 9px 13px; font-size: 10.5px; font-family: var(--mono); letter-spacing: 1px; text-transform: uppercase; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .result-compare th:nth-child(2) { color: var(--text-muted); }
+  .result-compare th:nth-child(3) { color: var(--accent); }
+  .result-compare td { padding: 9px 13px; border-bottom: 1px solid var(--border); }
+  .result-compare tr:last-child td { border-bottom: none; }
+  .result-compare td:nth-child(3) { color: var(--accent); font-weight: 500; }
+
+  /* CAPABILITY */
+  .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 16px 0; }
+  .cap-item { background: var(--surface2); border-radius: 8px; padding: 13px 15px; }
+  .cap-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .cap-icon { font-size: 14px; }
+  .cap-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+
+  /* NEWS LINKS */
+  .news-list { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+  .news-link { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--accent); text-decoration: none; padding: 6px 10px; background: var(--accent-light); border-radius: 6px; }
+  .news-link:hover { background: #dce5ff; }
+  .news-link::before { content: '↗'; font-family: var(--mono); font-weight: 700; flex-shrink: 0; }
+
+  /* OUTCOME BLOCK */
+  .outcome-block { background: #f0fdf4; border: 1px solid #bbf0cc; border-radius: 10px; padding: 14px 16px; margin-top: 16px; }
+  .outcome-title { font-size: 11px; font-family: var(--mono); letter-spacing: 1px; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+  .outcome-block ul { padding-left: 16px; font-size: 12.5px; }
+  .outcome-block li { margin-bottom: 4px; color: #1a4a28; }
+
+  /* OTHER */
+  .other-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 32px; }
+  .other-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .other-card h4 { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
+  .other-card .period { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .other-card ul { padding-left: 15px; font-size: 12.5px; }
+  .other-card li { margin-bottom: 4px; color: #444; }
+
+  .award-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 32px; }
+  .award-badge { width: 40px; height: 40px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .award-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .award-content .period { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .award-content p { font-size: 12.5px; color: #444; }
+
+  .cert-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+  .cert-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 7px 16px; font-size: 12.5px; display: flex; align-items: center; gap: 8px; }
+  .cert-chip .cert-date { font-family: var(--mono); font-size: 10.5px; color: var(--text-muted); }
+
+  .profile-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+  .profile-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 180px; }
+  .profile-item h4 { font-size: 10.5px; font-family: var(--mono); color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .profile-item p { font-size: 13.5px; font-weight: 500; }
+  .profile-item .sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+  strong { font-weight: 600; }
+  a { color: var(--accent); }
+  .mb16 { margin-bottom: 16px; }
+  .mb20 { margin-bottom: 20px; }
+
+  /* --- 추가된 꾸미기 및 애니메이션 요소 --- */
+  .about-item, .cap-item, .task-item, .cert-chip, .profile-item { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .about-item:hover, .cap-item:hover, .task-item:hover, .cert-chip:hover, .profile-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  
+  .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(45, 91, 227, 0.08); }
+  
+  .project-link { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); text-decoration: none; padding: 9px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s ease; }
+  .project-link:hover { border-color: var(--accent); transform: translateX(4px); background: var(--surface2); }
+  
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    header { padding: 32px 18px; }
+    main { padding: 28px 14px 60px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .domain-grid { grid-template-columns: repeat(2, 1fr); }
+    .other-grid { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Portfolio · 2026</div>
+    <h1>AI 기획 ​관리 ​담당자</h1>
+    <div class="header-links">
+      <a href="mailto:5010msk@naver.com">5010msk@naver.com</a>
+      <a href="https://github.com/mgskko" target="_blank">github.com/mgskko</a>
+      <a href="https://mgskko.github.io/" target="_blank">mgskko.github.io</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ABOUT -->
+  <div class="section-label">About</div>
+  <div class="about-grid mb20">
+    <div class="about-item">
+      <span class="icon">📐</span>
+      데이터를 빠르게 구조화하고, <strong>의사결정에 쓰이는 기준·문서로 전환</strong>하는 데 집중
+    </div>
+    <div class="about-item">
+      <span class="icon">🤝</span>
+      엔지니어·기획·모델팀·광고팀 등 <strong>다양한 이해관계자와의 협업</strong>을 통한 End-to-End 프로젝트 수행
+    </div>
+    <div class="about-item">
+      <span class="icon">⚙️</span>
+      Google Apps Script·Python 기반 <strong>자동화 도구 개발</strong>로 반복 업무 효율화
+    </div>
+    <div class="about-item full">
+      <span class="icon">🎤</span>
+      엔터테인먼트 도메인 AI 서비스에서 <strong>팬덤·아이돌 데이터를 직접 다룬 경험</strong> 보유
+    </div>
+  </div>
+
+  <!-- 핵심 역량 -->
+  <div class="section-label">핵심 역량</div>
+  <div class="cap-grid mb20">
+    <div class="cap-item">
+      <div class="cap-title"><span class="cap-icon">📊</span> 데이터 구조화 · 기준 설계</div>
+      <div class="cap-desc">유저 행동 데이터 분석, 라벨링 기준 정립, LLM·이미지 품질 지표 설계 경험 기반</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-title"><span class="cap-icon">📋</span> 보고서 · 운영 매뉴얼 작성</div>
+      <div class="cap-desc">비전문 조직도 이해할 수 있는 내부 공유용 PPT 제작 및 발표, 배포 전후 운영 매뉴얼 문서화</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-title"><span class="cap-icon">🔗</span> 협업 부서 요구사항 조율</div>
+      <div class="cap-desc">요구사항 정의 → 데이터 기준 설계 → 분석·정제 → 결과 반영 → 문서화·가이드 제작</div>
+    </div>
+    <div class="cap-item">
+      <div class="cap-title"><span class="cap-icon">⚡</span> 자동화 · 표준화</div>
+      <div class="cap-desc">Google Apps Script, Python, Cursor 기반 자동화 도구 개발로 팀 생산성 향상</div>
+    </div>
+  </div>
+
+  <!-- WORK EXPERIENCE -->
+  <div class="section-label">Work Experience</div>
+
+  <!-- PROJECT 1 -->
+  <div class="project-card">
+    <div class="card-header">
+      <span class="card-num">01</span>
+      <div class="card-title-group">
+        <h3>AI 서비스 출시 검증 및 운영 기준 설계</h3>
+        <span class="card-period">kakao · 카나나(Kanana) | 2023.01 ~ 2024.01</span>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="role-summary">
+        신규 기능·정책 변경 시 <strong>운영 품질 관점의 검증 기준을 설계하고 문서화</strong>하여 출시 판단과 운영 의사결정을 지원.
+        기능별 <strong>검증 마일스톤 수립 및 진척도 관리</strong>, 결과를 <strong>경영진·유관 사업부가 이해할 수 있는 형태로 보고서·PT 제작 및 발표</strong>.
+      </div>
+
+      <!-- 뉴스 링크 -->
+      <div class="news-list mb20">
+        <a class="news-link" href="https://www.kakaocorp.com/page/detail/11545" target="_blank">카카오, AI 메이트 서비스 '카나나' CBT 시작</a>
+        <a class="news-link" href="https://www.kakaocorp.com/page/detail/11850" target="_blank">카카오, AI 앱서비스 '카나나(Kanana)' 신규 업데이트… 편의와 흥미 제공</a>
+        <a class="news-link" href="https://www.kakaocorp.com/page/detail/11738" target="_blank">카카오, '카나나' 앱 신규 업데이트 — 스페셜 AI 메이트 신설 등 다양한 신규 기능 추가</a>
+      </div>
+
+      <div class="stat-row mb20">
+        <div class="stat-card">
+          <span class="stat-num">CBT→출시</span>
+          <span class="stat-label">전 구간 검증 참여</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">4개월+</span>
+          <span class="stat-label">낄끼빠빠 기준 반복 고도화</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">3종</span>
+          <span class="stat-label">AI 모델 비교 평가</span>
+        </div>
+      </div>
+
+      <div class="task-list">
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num">1</div>
+            <div class="task-title">단체대화방 AI 개입 기준 설계 (낄끼빠빠 모델)</div>
+          </div>
+          <div class="task-body">
+            <div class="flow-box mb16">
+              <span class="flow-step">평가셋 설계</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">개입 레이블링</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">LLM 자동 채점</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">정성평가</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-step">기준 수정·반복</span>
+            </div>
+            <ul>
+              <li>개입 필요 / 억제 / <strong>고위험(갈등·민감 주제) 케이스</strong> 시나리오 직접 정의·분류</li>
+              <li>다화자 환경의 응답 일관성·컨텍스트 유지 기준을 <strong>운영 지표 관점에서 직접 설계</strong></li>
+              <li>검증 결과를 기획·개발팀 대상 <strong>운영 인사이트 문서로 구조화하여 보고·공유 주도</strong></li>
+            </ul>
+            <div class="result-tag">출시 초기 서비스 안정성 확보 및 라이브 이슈 발생 가능성 최소화</div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num red">2</div>
+            <div class="task-title">주제별 AI 메이트 TC 구축 및 품질 기준 수립 (에듀·보험·사주)</div>
+          </div>
+          <div class="task-body">
+            <ul>
+              <li>도메인별 페르소나 리서치 → TC 직접 설계 → ADK 테스트 등록 → 기대 응답 align 회의 주도 → 기준 확정</li>
+              <li><strong>LLM 자동 채점이 잡지 못한 케이스</strong>를 정성평가로 직접 발굴·피드백</li>
+              <li>메이트 간 응답 품질 편차를 <strong>운영 지표로 가시화하고 공통 품질 기준 직접 수립·배포</strong></li>
+              <li>결과를 <strong>비개발 조직도 이해할 수 있는 PPT로 구성하여 유관 부서 발표 주도</strong></li>
+            </ul>
+            <div class="result-tag">다수 AI 서비스 일관성 유지 및 운영 관리 효율 확보</div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num green">3</div>
+            <div class="task-title">이미지 기반 기능 검증 — 멀티모달 실패 유형 체계화</div>
+          </div>
+          <div class="task-body">
+            <ul>
+              <li>이미지 인식 결과와 텍스트 응답 간 <strong>불일치 패턴 6개 유형으로 분류·문서화</strong></li>
+              <li>GPT-4o 및 내부 모델 결과 비교 평가 → 모델별 실패 케이스 유형화</li>
+              <li>이미지모델 시트 작업 → 타입/키워드 수정 → 크로스체크 → 평가 일관성 작업 순 체계화</li>
+            </ul>
+            <div class="result-tag">멀티모달 환경 서비스 한계 명확화 및 개선 우선순위 설정 근거 확보</div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num yellow">4</div>
+            <div class="task-title">리마인더 에이전트 검증 및 운영 매뉴얼 작성</div>
+          </div>
+          <div class="task-body">
+            <ul>
+              <li><strong>등록 / 조회 / 문맥 이해</strong> 상황별 시나리오 직접 설계, TC 200건 이상 구축</li>
+              <li>의도 불일치 케이스 패턴 직접 정의 → 개선 방향 도출</li>
+              <li>배포 전후 <strong>운영 매뉴얼 직접 구축·배포 및 프로세스 리드</strong></li>
+            </ul>
+            <div class="result-tag">TC 기반 회귀 검증 체계 구축</div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num purple">5</div>
+            <div class="task-title">초개인화 대화 분석 — 대화 내 개인화 요소 추출 및 검증</div>
+          </div>
+          <div class="task-body">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">사용자 대화 내에서 초개인화에 활용 가능한 요소(취향·관심사·행동 패턴 등)를 자동으로 추출·분류하는 프로젝트의 <strong>데이터 품질 기준 수립 및 검증 주도</strong></p>
+            <ul>
+              <li>대화 데이터를 개인화 추출 분류기에 입력 → 결과 확인 → <strong>카테고리 보완 및 재검토</strong></li>
+              <li>페르소나별 기대 출력 정의 및 크로스체크 → 피드백 반영</li>
+              <li>대화 맥락에서 추출된 개인화 요소의 <strong>품질 기준 및 분류 체계 직접 수립</strong></li>
+              <li>추출 결과의 정합성 검토를 통해 <strong>초개인화 서비스 적용 가능성 검증</strong></li>
+            </ul>
+            <div class="result-tag">대화 기반 초개인화 추출 파이프라인 품질 기준 마련</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PROJECT 2 -->
+  <div class="project-card">
+    <div class="card-header">
+      <span class="card-num">02</span>
+      <div class="card-title-group">
+        <h3>AI 개인화를 위한 유저 데이터 구조 설계 및 운영</h3>
+        <span class="card-period">kakao · 전사 AI·데이터 서비스 (UFO) | 2022.01 ~ 2024.01</span>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="role-summary">
+        AI 추천·개인화·타겟팅 품질을 좌우하는 <strong>유저 행동 데이터 분류 구조와 기준을 설계·검증</strong>.
+        비즈니스 요구사항을 데이터 기준으로 구조화하여 <strong>마케팅·광고·개발팀에 전달하는 PMO 역할</strong> 수행.
+        특히 <strong>K-POP·아이돌 도메인 카테고리를 직접 설계</strong>하며 엔터테인먼트 산업 데이터의 구조적 특수성 습득.
+      </div>
+
+      <div class="bg-block">
+        카카오 AI 추천·개인화 서비스는 유저를 <strong>730여 개 카테고리로 분류하는 시스템</strong> 기반으로 작동.
+        소스별로 분류 기준이 달라, 같은 채널이 부서마다 다르게 태깅되는 문제가 누적된 상황이었다.
+      </div>
+
+      <div class="stat-row mb20">
+        <div class="stat-card">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">도메인 가이드라인 직접 작성</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">4건+</span>
+          <span class="stat-label">신규 카테고리 선제 기획·제안</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">6개 조직</span>
+          <span class="stat-label">협업 유관 부서</span>
+        </div>
+      </div>
+
+      <div class="task-list">
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num">1</div>
+            <div class="task-title">🎤 음악·아이돌 카테고리 신규 설계</div>
+          </div>
+          <div class="task-body">
+            <ul class="mb16">
+              <li>국내 음반 판매량 3년간 <strong>약 2.8배 증가</strong> 트렌드 리서치 및 카테고리 신설 WHY 문서 작성</li>
+              <li>K-POP 팬덤의 굿즈·MD 구매, 최애적금 등 <strong>금융 연계 소비 행동이 기존 체계로 미분류</strong>됨을 발견</li>
+              <li><code>관심사 > 음악 > 아이돌</code> 코드 체계 및 분류 기준 직접 정의</li>
+              <li>K-POP 스토어, 팬 커뮤니티 채널 태깅 기준 수립</li>
+            </ul>
+            <div class="result-tag">아이돌·K-POP 관심 유저 독립 세그먼트 식별 가능 → 타겟팅·추천 서비스 활용 구조 완성</div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num red">2</div>
+            <div class="task-title">카테고리 계층 구조 재설계 및 도메인별 가이드 작성</div>
+          </div>
+          <div class="task-body">
+            <div class="ba-grid mb16">
+              <div class="ba-box">
+                <div class="ba-label">Before</div>
+                <div class="ba-code">야구 → 단순 태그<br>스포츠의류 → 단순 태그<br>K-POP 채널 → 미분류</div>
+              </div>
+              <div class="ba-arrow">→</div>
+              <div class="ba-box after">
+                <div class="ba-label after-label">After</div>
+                <div class="ba-code">관심사 > 스포츠 > 야구 > KBO<br>소비 > 패션/의류 > 스포츠의류<br>관심사 > 음악 > 아이돌</div>
+              </div>
+            </div>
+            <div class="domain-grid">
+              <div class="domain-item"><div class="domain-name">게임 <span class="domain-tag">재태깅</span></div><div class="domain-desc">어드벤처·소프트웨어 세분화</div></div>
+              <div class="domain-item"><div class="domain-name">금융 <span class="domain-tag">신설</span></div><div class="domain-desc">재테크·은행·카드사·증권</div></div>
+              <div class="domain-item"><div class="domain-name">라이프(TMI) <span class="domain-tag">검토</span></div><div class="domain-desc">라이프·가치관·소비축 룰 업데이트</div></div>
+              <div class="domain-item"><div class="domain-name">음악 <span class="domain-tag">신설</span></div><div class="domain-desc">아이돌 카테고리 (I2617)</div></div>
+              <div class="domain-item"><div class="domain-name">스포츠 <span class="domain-tag">세분화</span></div><div class="domain-desc">야구·축구 + e스포츠 신설 제안</div></div>
+              <div class="domain-item"><div class="domain-name">취미 <span class="domain-tag">분류</span></div><div class="domain-desc">1·2차 분류 + DIY 카테고리 제안</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num green">3</div>
+            <div class="task-title">신규 카테고리 선제 기획 — 트렌드 데이터 기반 제안</div>
+          </div>
+          <div class="task-body">
+            <table class="data-table">
+              <thead><tr><th>제안 카테고리</th><th>근거 데이터</th><th>활용 방향</th></tr></thead>
+              <tbody>
+                <tr><td>음악 > 아이돌</td><td>음반 판매량 3년 2.8배 증가</td><td>K-POP 유저 타겟팅, 최애적금 연계</td></tr>
+                <tr><td>관심사 > e스포츠</td><td>LCK·오버워치 리그 시장 성장</td><td>게임과 분리된 전용 세그먼트</td></tr>
+                <tr><td>업종 > DIY</td><td>'취미'·'육아'로 분산 태깅 문제</td><td>DIY 관심 유저 통합 관리</td></tr>
+                <tr><td>금융 > 인터넷은행</td><td>3사 합산 이용자 4,127만 명</td><td>카카오뱅크·케뱅·토스뱅크 세분화</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num yellow">4</div>
+            <div class="task-title">정답셋 품질 검증 · PMO 운영 · 데이터 추출 자동화</div>
+          </div>
+          <div class="task-body">
+            <ul class="mb16">
+              <li>분기별 크로스체크 운영: <strong>작업자 간 불일치 패턴 식별 → 가이드 업데이트 → 전파</strong></li>
+              <li>LLM 야구 봇 레이블링: LLM 생성 응답의 <strong>의도·맥락 정합성 검증 기준 수립</strong></li>
+              <li>정답셋 운영 회의 <strong>주 2~3회, 2년간 지속 주도</strong> — 프로젝트 마일스톤 수립 및 진척도 관리, Action Item 트래킹</li>
+              <li>1~4분기 <strong>회고 문서 작성 → 경영진·유관 사업부 대상 전략 보고서 및 PT로 제작·발표</strong></li>
+              <li>기획·개발·모델·광고·마케팅·운영팀 등 <strong>6개 이상 유관 조직과 협업하며 데이터 기준 조율</strong></li>
+              <li>Google Apps Script·Python 기반 <strong>데이터 추출·정제 자동화 도구 개발</strong>로 반복 업무 효율화</li>
+              <li>분석 결과를 <strong>비전문 조직도 이해할 수 있도록 PPT 및 대시보드로 제작·발표</strong></li>
+            </ul>
+
+            <div class="result-compare">
+              <table>
+                <thead><tr><th>항목</th><th>Before</th><th>After</th></tr></thead>
+                <tbody>
+                  <tr><td>카테고리 구조</td><td>평면 단일 태그</td><td>3단계 계층 구조</td></tr>
+                  <tr><td>분류 기준</td><td>부서마다 상이</td><td>전사 표준 통일</td></tr>
+                  <tr><td>신규 카테고리 대응</td><td>사후 요청 처리</td><td>트렌드 기반 선제 기획</td></tr>
+                  <tr><td>데이터 활용 범위</td><td>광고 타겟팅 단일</td><td>추천·검색·개인화·AI 에이전트</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="outcome-block">
+              <div class="outcome-title">성과</div>
+              <ul>
+                <li>정립된 기준이 <strong>광고팀·마케팅팀의 타겟팅 전략에 적용</strong>되어 운영 중</li>
+                <li>카테고리 구조 개선을 통해 <strong>검색·추천 품질 향상 기반 마련</strong></li>
+                <li>정제된 데이터가 <strong>카카오톡 '프로야구봇', 사내 챗봇 등 AI 응답 품질 개선에 실제 활용</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PROJECTS -->
+  <div class="section-label">Projects</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:32px;">
+    <a href="https://github.com/mgskko/Meteorite_Landings" target="_blank" class="project-link">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2023.05</span>
+      <span style="font-weight:600;">지역별 운석 충돌 데이터 분석</span>
+      <span style="color:var(--text-muted);font-size:12px;">Python · Tableau · MySQL</span>
+    </a>
+    <a href="https://github.com/mgskko/Project_Contest_National_Library_of_Korea_Book_Data" target="_blank" class="project-link">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2023.10</span>
+      <span style="font-weight:600;">국립중앙도서관 데이터 콘텐츠 공모전 🏅 장려상</span>
+      <span style="color:var(--text-muted);font-size:12px;">Python · SQL</span>
+    </a>
+    <a href="https://github.com/mgskko/Teamproject_AreYouMaeji" target="_blank" class="project-link">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2022.09</span>
+      <span style="font-weight:600;">매지세요? — 교내 심부름 웹 서비스</span>
+      <span style="color:var(--text-muted);font-size:12px;">React · JavaScript · PM</span>
+    </a>
+    <a href="https://github.com/mgskko/Teamproject_FBC_Algorithm" target="_blank" class="project-link">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2021.11</span>
+      <span style="font-weight:600;">FBS-Algorithms — 신규 그래프 알고리즘 개발</span>
+      <span style="color:var(--text-muted);font-size:12px;">Python · 팀리더</span>
+    </a>
+  </div>
+
+
+
+  <!-- CERTIFICATIONS -->
+  <div class="section-label">Certifications</div>
+  <div class="cert-row">
+    <div class="cert-chip">데이터 분석 준전문가 (ADsP) <span class="cert-date">2024.05</span></div>
+    <div class="cert-chip">SQL 개발자 (SQLD) <span class="cert-date">2023.12</span></div>
+    <div class="cert-chip">컴퓨터활용능력 1급 <span class="cert-date">2022.08</span></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="section-label">Profile</div>
+  <div class="profile-row">
+    <div class="profile-item">
+      <h4>학력</h4>
+      <p>연세대학교 미래캠퍼스</p>
+      <div class="sub">수학과 / 컴퓨터공학과 복수전공 · 2018 ~ 2023</div>
+    </div>
+    <div class="profile-item">
+      <h4>병역</h4>
+      <p>육군 병장 만기제대</p>
+      <div class="sub">2020.01 ~ 2021.07</div>
+    </div>
+    <div class="profile-item">
+      <h4>스킬</h4>
+      <p>Python · SQL · JavaScript</p>
+      <div class="sub">Tableau · Google Apps Script</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    const elements = document.querySelectorAll('.section-label, .about-grid, .cap-grid, .project-card, .task-item, .project-link, .cert-row, .profile-item');
+    elements.forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+  });
+</script>
+</body>
+</html>
