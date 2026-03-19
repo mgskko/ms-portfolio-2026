@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — AI 서비스 기획 · 데이터 운영</title>
+<title>Portfolio — AI 기획 ​관리 ​담당자</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -166,19 +166,6 @@
   .mb16 { margin-bottom: 16px; }
   .mb20 { margin-bottom: 20px; }
 
-  /* --- 추가된 꾸미기 및 애니메이션 요소 --- */
-  .about-item, .cap-item, .task-item, .cert-chip, .profile-item { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-  .about-item:hover, .cap-item:hover, .task-item:hover, .cert-chip:hover, .profile-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-  
-  .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(45, 91, 227, 0.08); }
-  
-  .project-link { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); text-decoration: none; padding: 9px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s ease; }
-  .project-link:hover { border-color: var(--accent); transform: translateX(4px); background: var(--surface2); }
-  
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 640px) {
     header { padding: 32px 18px; }
     main { padding: 28px 14px 60px; }
@@ -255,7 +242,7 @@
       <span class="card-num">01</span>
       <div class="card-title-group">
         <h3>AI 서비스 출시 검증 및 운영 기준 설계</h3>
-        <span class="card-period">kakao · 카나나(Kanana) | 2023.01 ~ 2024.01</span>
+        <span class="card-period">kakao · 카나나(Kanana) | 2025.01 ~ 2026.01</span>
       </div>
     </div>
     <div class="card-body">
@@ -389,7 +376,7 @@
       <span class="card-num">02</span>
       <div class="card-title-group">
         <h3>AI 개인화를 위한 유저 데이터 구조 설계 및 운영</h3>
-        <span class="card-period">kakao · 전사 AI·데이터 서비스 (UFO) | 2022.01 ~ 2024.01</span>
+        <span class="card-period">kakao · 전사 AI·데이터 서비스 | 2024.01 ~ 2026.01</span>
       </div>
     </div>
     <div class="card-body">
@@ -405,7 +392,7 @@
         소스별로 분류 기준이 달라, 같은 채널이 부서마다 다르게 태깅되는 문제가 누적된 상황이었다.
       </div>
 
-      <div class="stat-row mb20">
+      <div class="stat-row mb20" style="grid-template-columns: repeat(4, 1fr);">
         <div class="stat-card">
           <span class="stat-num">10+</span>
           <span class="stat-label">도메인 가이드라인 직접 작성</span>
@@ -417,6 +404,10 @@
         <div class="stat-card">
           <span class="stat-num">6개 조직</span>
           <span class="stat-label">협업 유관 부서</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">4종</span>
+          <span class="stat-label">정책서·운영 가이드 직접 구축</span>
         </div>
       </div>
 
@@ -523,6 +514,21 @@
           </div>
         </div>
 
+        <div class="task-item">
+          <div class="task-header">
+            <div class="task-num" style="background:#2d7dd2;">5</div>
+            <div class="task-title">IT 서비스 정책서·운영 가이드 작성 및 사내 시스템 운영</div>
+          </div>
+          <div class="task-body">
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">AI 서비스 출시 전후의 정책 문서화, 사내 데이터 분류 시스템 운영, 검색·추천 품질 기준 수립까지 IT 서비스 운영 전반에 걸친 문서화 및 시스템 운영 경험</p>
+            <ul>
+              <li><strong>AI 서비스 출시 전 정책서 수집·정리</strong> — AI 서비스 약관 동의 정책 문서를 유형별로 수집·분류하고, 서비스 운영 기준으로 구조화</li>
+              <li><strong>검색 서비스 초기 결과 품질 기준 설계</strong> — 검색 0단계(초기 진입 결과) 정답셋 직접 설계·구축, 크로스체크 운영으로 기준 고도화</li>
+            </ul>
+            <div class="result-tag">서비스 정책서 작성·사내 시스템 운영·매뉴얼 구축 전 과정 직접 수행</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -531,22 +537,22 @@
   <!-- PROJECTS -->
   <div class="section-label">Projects</div>
   <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:32px;">
-    <a href="https://github.com/mgskko/Meteorite_Landings" target="_blank" class="project-link">
+    <a href="https://github.com/mgskko/Meteorite_Landings" target="_blank" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);text-decoration:none;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
       <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2023.05</span>
       <span style="font-weight:600;">지역별 운석 충돌 데이터 분석</span>
       <span style="color:var(--text-muted);font-size:12px;">Python · Tableau · MySQL</span>
     </a>
-    <a href="https://github.com/mgskko/Project_Contest_National_Library_of_Korea_Book_Data" target="_blank" class="project-link">
+    <a href="https://github.com/mgskko/Project_Contest_National_Library_of_Korea_Book_Data" target="_blank" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);text-decoration:none;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
       <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2023.10</span>
       <span style="font-weight:600;">국립중앙도서관 데이터 콘텐츠 공모전 🏅 장려상</span>
       <span style="color:var(--text-muted);font-size:12px;">Python · SQL</span>
     </a>
-    <a href="https://github.com/mgskko/Teamproject_AreYouMaeji" target="_blank" class="project-link">
+    <a href="https://github.com/mgskko/Teamproject_AreYouMaeji" target="_blank" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);text-decoration:none;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
       <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2022.09</span>
       <span style="font-weight:600;">매지세요? — 교내 심부름 웹 서비스</span>
       <span style="color:var(--text-muted);font-size:12px;">React · JavaScript · PM</span>
     </a>
-    <a href="https://github.com/mgskko/Teamproject_FBC_Algorithm" target="_blank" class="project-link">
+    <a href="https://github.com/mgskko/Teamproject_FBC_Algorithm" target="_blank" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);text-decoration:none;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
       <span style="font-family:var(--mono);font-size:10px;color:var(--text-muted);min-width:80px;">2021.11</span>
       <span style="font-weight:600;">FBS-Algorithms — 신규 그래프 알고리즘 개발</span>
       <span style="color:var(--text-muted);font-size:12px;">Python · 팀리더</span>
@@ -558,7 +564,7 @@
   <!-- CERTIFICATIONS -->
   <div class="section-label">Certifications</div>
   <div class="cert-row">
-    <div class="cert-chip">데이터 분석 준전문가 (ADsP) <span class="cert-date">2024.05</span></div>
+    <div class="cert-chip">데이터 분석 준전문가 (ADsP) <span class="cert-date">2025.05</span></div>
     <div class="cert-chip">SQL 개발자 (SQLD) <span class="cert-date">2023.12</span></div>
     <div class="cert-chip">컴퓨터활용능력 1급 <span class="cert-date">2022.08</span></div>
   </div>
@@ -578,30 +584,4 @@
     </div>
     <div class="profile-item">
       <h4>스킬</h4>
-      <p>Python · SQL · JavaScript</p>
-      <div class="sub">Tableau · Google Apps Script</div>
-    </div>
-  </div>
-
-</main>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05 });
-
-    const elements = document.querySelectorAll('.section-label, .about-grid, .cap-grid, .project-card, .task-item, .project-link, .cert-row, .profile-item');
-    elements.forEach(el => {
-      el.classList.add('fade-in');
-      observer.observe(el);
-    });
-  });
-</script>
-</body>
-</html>
+      <p>Python ·
